@@ -17,7 +17,7 @@ namespace TabsList
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
-            //Регистрируем зависимости
+            //Регистрируем зависимости и сервисы
             builder.Services.AddScoped<IBaseRepository<Tabs>, TabsRepository>();
             builder.Services.AddScoped<ITabsService, TabsService>();
 
