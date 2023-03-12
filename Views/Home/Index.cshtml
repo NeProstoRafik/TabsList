@@ -1,7 +1,46 @@
-﻿@using TabsList.Domain.Enum
+﻿@using TabsList.Domain.Entity
+@using TabsList.Domain.Enum
+@using TabsList.Domain.ViewModel
+@model  List<TabsViewModel>
 @{
     ViewData["Title"] = "Home Page";
 }
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.3/css/jquery.dataTables.min.css">
+
+    <table id="tab" class="display" style="width:100%">
+     <thead>
+        <tr>    
+    <th>Название</th>
+     <th>Категория</th>
+    <th>Описание</th>   
+    <th>URL</th>   
+    <th>Действие</th>
+       </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Category)
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.Description)      
+            </td>
+            <td>
+               @Html.DisplayFor(modelItem => item.Url)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |               
+                <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+    </table>
+
 <h4 class="mb-3 text-muted">Создание вкладки</h4>
 <form id="createTaskForm">
     <div class="mb-3">
@@ -23,8 +62,44 @@
 
 @section Scripts
 {
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+      <script> src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"</script>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+
+<script>$(document).ready(function () {
+        $('#tab').DataTable({
+            columnDefs: [
+                {
+                    targets: [0],
+                    orderData: [0, 1],
+                },
+                {
+                    targets: [1],
+                    orderData: [1, 0],
+                },
+                {
+                    targets: [4],
+                    orderData: [4, 0],
+                },
+            ],
+        });
+    });</script>
+
+     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+   
+            
+       <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"></script>
+
+
+   
     <script>
+//       let tabsTable= new DataTable('#tab');
+//  let tabsTable= $(document).ready( function () {
+//    $('#tab').DataTable();
+//} );
+
+
         $('#createTask').on('click', function (e){
             e.preventDefault();
             $.ajax({

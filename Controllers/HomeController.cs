@@ -1,5 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using TabsList.DAL;
+using TabsList.Domain.Entity;
 using TabsList.Domain.ViewModel;
 using TabsList.Models;
 using TabsList.Service.Interfaces;
@@ -10,16 +13,38 @@ namespace TabsList.Controllers
     {
         private readonly ITabsService _tabsService;
         private readonly ILogger<HomeController> _logger;
+        private readonly ApplicationDbContext applicationDb;
 
         public HomeController(ILogger<HomeController> logger, ITabsService tabsService)
         {
             _logger = logger;
             _tabsService = tabsService;
+           
+        }
+        [HttpGet]
+        public ActionResult Index()
+        {
+            var result = _tabsService.GetAll().Result;
+            return View(result);          
         }
 
-        public IActionResult Index()
+        [HttpGet]
+        public async Task<IActionResult> Delete(int id)
         {
-            return View();
+            var responce = await _tabsService.Delete(id);
+            if (responce.StatusCode == Domain.Entity.StatusCode.OK)
+            {
+                return RedirectToAction("Index");
+            }
+            return RedirectToAction("Error");
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> TabsHandler()
+        {
+         var result = _tabsService.GetAll();
+           
+            return View(result);
         }
         [HttpPost]
         public async Task<IActionResult> Create(TabsViewModel model)
