@@ -1,0 +1,59 @@
+﻿@using TabsList.Domain.Entity
+@using TabsList.Domain.Enum
+@using TabsList.Domain.ViewModel
+@model TabsList.Domain.Entity.Tabs
+@{
+    ViewData["Title"] = "Home Page";
+}
+<h4 class="mb-3 text-muted">Изменение вкладки"</h4>
+<form id="editTaskForm">
+    <div class="mb-3">
+        <input asp-for="Id" hidden />
+        <label class="form-label">Название</label>
+        <input name="name" asp-for="Name" type="text" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">URL</label>
+        <input name="Url" asp-for="Url" type="text" class="form-control" />
+    </div>
+    <label class="form-label">Категория</label>
+    <select name="Category" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Category>()"></select>
+    <div class="mb-3">
+        <label class="form-label">Описание</label>
+        <textarea name="Description" asp-for="Description" type="text" class="form-control" rows="3"></textarea>
+    </div>
+    <button id="editTask" class="btn btn-primary">Создать</button>
+</form>
+
+@section Scripts
+{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+
+        $('#editTask').on('click', function (e){
+            e.preventDefault();
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Update", "Home")',
+                data: $('#editTaskForm').serialize(),
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Информация',
+                        text: response.description,
+                        icon: 'success',
+                        confirmButtonText: 'Окей'
+                    })
+                },
+                error: function (response) {
+                     Swal.fire({
+                        title: 'Информация',
+                        text: response.responseJSON.description,
+                        icon: 'error',
+                        confirmButtonText: 'Окей'
+                     })
+                }
+            })
+        });                
+
+    </script>
+}

@@ -28,8 +28,9 @@ namespace TabsList.Controllers
             return View(result);          
         }
 
+        //[HttpPut("{id}")]
         [HttpGet]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
             var responce = await _tabsService.Delete(id);
             if (responce.StatusCode == Domain.Entity.StatusCode.OK)
@@ -58,6 +59,27 @@ namespace TabsList.Controllers
             {
                 return BadRequest(new { description = responce.Description });
             }
+        }
+        public IActionResult Edit(int id)
+        {
+            var res = _tabsService.Get(id);
+       
+            return View(res);
+       
+        }
+
+        public async Task<IActionResult> Update(TabsViewModel model)
+        {
+            var responce = await _tabsService.Update(model);
+            return Ok(new { description = responce.Description });
+            // хз чтото не робит
+          //  if (responce.StatusCode == Domain.Entity.StatusCode.OK)
+          //  {
+          //  return Ok(new { description = responce.Description });
+
+          //      return Redirect("http://microsoft.com");
+          //  }
+          //return RedirectToAction("Error");
         }
         public IActionResult Privacy()
         {

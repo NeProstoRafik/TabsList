@@ -12,28 +12,34 @@
         <tr>    
     <th>Название</th>
      <th>Категория</th>
-    <th>Описание</th>   
+    <th style="width:10%">Описание</th>   
     <th>URL</th>   
     <th>Действие</th>
        </tr>
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
-            <td>
+        <tr id="dsf" >
+            <td  >
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
-            <td>
-               @Html.DisplayFor(modelItem => item.Description)      
+            <td  >     
+                   <div id="hz"  style="max-width: 500px; max-height:150px;overflow-y: scroll;"contenteditable="true">@Html.DisplayFor(modelItem => item.Description)   </div>
+                          
+            </td>
+            <td >
+                <div  style="max-width: 300px; max-height:100px; overflow-x: scroll;"contenteditable="true">@Html.DisplayFor(modelItem => item.Url) </div>
+          
             </td>
             <td>
-               @Html.DisplayFor(modelItem => item.Url)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> |               
+              @*   <button id="editTabs" onclick="myFunction(this.closest('tr')) ">Изменить</button>*@
+            
+                  @*  <button id="editTabs" class="btn btn-primary">Изменить</button>*@
+                <a asp-action="Edit" asp-route-id="@item.Id">Изменить</a> | 
+                 @*<button asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('Are you sure you want to delete?')" class="btn btn-danger btn-sm">Delete</button>*@
                 <a asp-action="Delete" asp-route-id="@item.Id">Удалить</a>
             </td>
         </tr>
@@ -60,6 +66,9 @@
     <button id="createTask" class="btn btn-primary">Создать</button>
 </form>
 
+
+
+
 @section Scripts
 {
       <script> src="https://cdn.datatables.net/1.13.3/js/jquery.dataTables.min.js"</script>
@@ -83,7 +92,8 @@
                 },
             ],
         });
-    });</script>
+    });</script>    
+
 
      <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
    
@@ -94,11 +104,6 @@
 
    
     <script>
-//       let tabsTable= new DataTable('#tab');
-//  let tabsTable= $(document).ready( function () {
-//    $('#tab').DataTable();
-//} );
-
 
         $('#createTask').on('click', function (e){
             e.preventDefault();
@@ -123,6 +128,35 @@
                      })
                 }
             })
-        });
+        });        
+
+
+
+          $('#editTabs').on('click', function (e){
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '@Url.Action("Update", "Home")',
+                data: $('row').serialize(),
+                success: function (response) {
+                    Swal.fire({
+                        title: 'Информация',
+                        text: response.description,
+                        icon: 'success',
+                        confirmButtonText: 'Окей'
+                    })
+                },
+                error: function (response) {
+                     Swal.fire({
+                        title: 'Информация',
+                        text: response.responseJSON.description,
+                        icon: 'error',
+                        confirmButtonText: 'Окей'
+                     })
+                }
+            })
+        });        
+
     </script>
 }
