@@ -22,9 +22,14 @@ namespace TabsList
             builder.Services.AddScoped<ITabsService, TabsService>();
 
             //регестрируем ДБ
+            //var connectionStrings = builder.Configuration.GetConnectionString("DefaultConnection");
+            //builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            //options.UseSqlServer(connectionStrings));
+
+            //БД лайт
             var connectionStrings = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(connectionStrings));
+            options.UseSqlite(connectionStrings));
 
             var app = builder.Build();
 
