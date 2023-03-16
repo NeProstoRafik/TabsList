@@ -27,13 +27,13 @@
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
             <td  >     
-                   <div id="hz"  style="max-width: 500px; max-height:150px;overflow-y: scroll;"contenteditable="true">@Html.DisplayFor(modelItem => item.Description)   </div>
-                          
+                   <div id="hz"  style="max-width: 500px; max-height:150px;overflow-y: scroll;"> @Html.DisplayFor(modelItem => item.Description)   </div>
+                  
             </td>
             <td >
-                <div  style="max-width: 300px; max-height:100px; overflow-x: scroll;"contenteditable="true">@Html.DisplayFor(modelItem => item.Url) </div>
-          
-            </td>
+                    <div style="max-width: 300px; max-height:40px; overflow-y: scroll;">  <a href="@Html.DisplayFor(modelItem => item.Url)" target="_blank">@Html.DisplayFor(modelItem => item.Url)</a> </div>
+                  
+                </td>
             <td>
               @*   <button id="editTabs" onclick="myFunction(this.closest('tr')) ">Изменить</button>*@
             
@@ -47,15 +47,19 @@
     </tbody>
     </table>
 
+<p><a name="top"></a></p>
 <h4 class="mb-3 text-muted">Создание вкладки</h4>
 <form id="createTaskForm">
     <div class="mb-3">
         <label class="form-label">Название</label>
         <input name="name" type="text" class="form-control"/>
     </div>
+ 
      <div class="mb-3">
         <label class="form-label">URL</label>
-        <input name="Url" type="text" class="form-control"/>
+        <input name="Url" type="url" class="form-control"/>
+      @*  <input type="url" required aria-required="true" pattern="^(https?://)?([a-zA-Z0-9]([a-zA-ZäöüÄÖÜ0-9\-]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,6}$" name="url" />*@
+ 
     </div>
     <label class="form-label">Категория</label>
     <select name="Category" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Category>()"></select>
@@ -132,31 +136,31 @@
 
 
 
-          $('#editTabs').on('click', function (e){
-            e.preventDefault();
+        //  $('#editTabs').on('click', function (e){
+        //    e.preventDefault();
 
-            $.ajax({
-                type: 'POST',
-                url: '@Url.Action("Update", "Home")',
-                data: $('row').serialize(),
-                success: function (response) {
-                    Swal.fire({
-                        title: 'Информация',
-                        text: response.description,
-                        icon: 'success',
-                        confirmButtonText: 'Окей'
-                    })
-                },
-                error: function (response) {
-                     Swal.fire({
-                        title: 'Информация',
-                        text: response.responseJSON.description,
-                        icon: 'error',
-                        confirmButtonText: 'Окей'
-                     })
-                }
-            })
-        });        
+        //    $.ajax({
+        //        type: 'POST',
+        //        url: '@Url.Action("Update", "Home")',
+        //        data: $('row').serialize(),
+        //        success: function (response) {
+        //            Swal.fire({
+        //                title: 'Информация',
+        //                text: response.description,
+        //                icon: 'success',
+        //                confirmButtonText: 'Окей'
+        //            })
+        //        },
+        //        error: function (response) {
+        //             Swal.fire({
+        //                title: 'Информация',
+        //                text: response.responseJSON.description,
+        //                icon: 'error',
+        //                confirmButtonText: 'Окей'
+        //             })
+        //        }
+        //    })
+        //});        
 
     </script>
 }

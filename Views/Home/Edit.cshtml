@@ -5,7 +5,7 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-<h4 class="mb-3 text-muted">Изменение вкладки"</h4>
+<h4 class="mb-3 text-muted">Изменение вкладки</h4>
 <form id="editTaskForm">
     <div class="mb-3">
         <input asp-for="Id" hidden />
@@ -14,7 +14,7 @@
     </div>
     <div class="mb-3">
         <label class="form-label">URL</label>
-        <input name="Url" asp-for="Url" type="text" class="form-control" />
+        <input name="Url" asp-for="Url" type="url" class="form-control" />
     </div>
     <label class="form-label">Категория</label>
     <select name="Category" class="form-select mb-3" asp-items="Html.GetEnumSelectList<Category>()"></select>
