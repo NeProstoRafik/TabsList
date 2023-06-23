@@ -26,8 +26,8 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Category)
             </td>
-            <td  >     
-                   <div id="hz"  style="max-width: 500px; max-height:150px;overflow-y: scroll;"> @Html.DisplayFor(modelItem => item.Description)   </div>
+            <td  >
+                    <div id="hz" style="min-width: 400px; max-width: 500px; max-height:150px;overflow-y: scroll;"> @Html.DisplayFor(modelItem => item.Description)   </div>
                   
             </td>
             <td >
@@ -132,35 +132,9 @@
                      })
                 }
             })
-        });        
-
-
-
-        //  $('#editTabs').on('click', function (e){
-        //    e.preventDefault();
-
-        //    $.ajax({
-        //        type: 'POST',
-        //        url: '@Url.Action("Update", "Home")',
-        //        data: $('row').serialize(),
-        //        success: function (response) {
-        //            Swal.fire({
-        //                title: 'Информация',
-        //                text: response.description,
-        //                icon: 'success',
-        //                confirmButtonText: 'Окей'
-        //            })
-        //        },
-        //        error: function (response) {
-        //             Swal.fire({
-        //                title: 'Информация',
-        //                text: response.responseJSON.description,
-        //                icon: 'error',
-        //                confirmButtonText: 'Окей'
-        //             })
-        //        }
-        //    })
-        //});        
+        });       
+     
 
     </script>
+
 }

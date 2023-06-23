@@ -41,12 +41,12 @@ namespace TabsList.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> TabsHandler()
-        {
-         var result = _tabsService.GetAll();
+        //public async Task<ActionResult> TabsHandler()
+        //{
+        // var result = _tabsService.GetAll();
            
-            return View(result);
-        }
+        //    return View(result);
+        //}
         [HttpPost]
         public async Task<IActionResult> Create(TabsViewModel model)
         {
@@ -73,13 +73,13 @@ namespace TabsList.Controllers
             var responce = await _tabsService.Update(model);
             return Ok(new { description = responce.Description });
             // хз чтото не робит
-          //  if (responce.StatusCode == Domain.Entity.StatusCode.OK)
-          //  {
-          //  return Ok(new { description = responce.Description });
+        //    if (responce.StatusCode == Domain.Entity.StatusCode.OK)
+        //    {
+        //      //  await Ok(new { description = responce.Description });
 
-          //      return Redirect("http://microsoft.com");
-          //  }
-          //return RedirectToAction("Error");
+        //        return RedirectToAction("TabsHandler", "Home");
+        //    }
+        //   return RedirectToAction("Error");
         }
         public IActionResult Privacy()
         {
